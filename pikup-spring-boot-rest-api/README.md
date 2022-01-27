@@ -61,11 +61,11 @@ The app will start running at <http://localhost:8080> with basic auth user/passw
 
 
 
-## Endpoints that can be hit via Insomnia or Postman
+## Some endpoints that can be hit via Insomnia or Postman, see Insomnia.json to import additional requests
 
-    GET /api/v1/users
+    GET /user/v1/users
     
-    POST /api/v1/users
+    POST /user/v1/users
         Sample body:
             {
 	            "username": "benszabo",
@@ -73,9 +73,9 @@ The app will start running at <http://localhost:8080> with basic auth user/passw
 	            "password": "password"
             }
     
-    GET /api/v1/users/{id}
+    GET /user/v1/users/{id}
     
-    PUT /api/v1/users/{id}
+    PUT /user/v1/users/{id}
         Sample body:
             {
 	            "username": "bcszabo",
@@ -83,4 +83,4 @@ The app will start running at <http://localhost:8080> with basic auth user/passw
 	            "password": "pswrd"
             }
     
-    DELETE /api/v1/users/{id}
+    DELETE /user/v1/users/{id}
