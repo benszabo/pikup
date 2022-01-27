@@ -33,18 +33,30 @@ CREATE TABLE `user` (
 
 ```
 
-**4. Change mysql username and password as per your installation**
+**4 Create Mysql database activity table**
+```
+CREATE TABLE `activity` (
+`id` bigint NOT NULL AUTO_INCREMENT,
+`activity_name` varchar(255) NOT NULL,
+`activity_time` varchar(255) NOT NULL,
+`create_time` datetime DEFAULT NULL,
+`member_count` varchar(255) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
+
+**5. Change mysql username and password as per your installation**
 
 + open `src/main/resources/application.properties`
 
 + change `spring.datasource.username` and `spring.datasource.password` as per your mysql installation
 
-**5. Set up Maven if applicable**
+**6. Set up Maven if applicable**
 `https://www.baeldung.com/install-maven-on-windows-linux-mac`
 
-**6. Start APIs via IntelliJ or other java IDE using Spring Boot configuration**
+**7. Start APIs via IntelliJ or other java IDE using Spring Boot configuration**
 ```
-The app will start running at <http://localhost:8080>.
+The app will start running at <http://localhost:8080> with basic auth user/password being admin/admin
 ```
 
 
