@@ -20,7 +20,7 @@ import java.util.Map;
  * @author Benjamin Szabo
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/user/v1")
 public class UserController {
 
     @Autowired
