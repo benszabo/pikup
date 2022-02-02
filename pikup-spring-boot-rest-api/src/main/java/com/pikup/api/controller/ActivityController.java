@@ -60,7 +60,7 @@ public class ActivityController {
         Activity activity =
                 activityRepository
                         .findById(activityId)
-                        .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + activityId));
+                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found on :: " + activityId));
         return ResponseEntity.ok().body(activity);
     }
 
@@ -106,7 +106,7 @@ public class ActivityController {
     }
 
     /**
-     * Delete user map.
+     * Delete activity map.
      *
      * @param activityId the activity id
      * @return the map

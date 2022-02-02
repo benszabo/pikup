@@ -18,6 +18,9 @@ public class Activity {
     @Id
     private long id;
 
+    @Column(name = "created_by", nullable = false)
+    private String createdBy;
+
     @Column(name = "activity_name", nullable = false)
     private String activityName;
 
@@ -120,12 +123,30 @@ public class Activity {
         this.activityTime = role;
     }
 
+    /**
+     * Gets createdBy.
+     *
+     * @return the createdBy
+     */
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    /**
+     * Sets createdBy.
+     *
+     * @param createdBy the createdBy
+     */
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     @Override
     public String toString() {
         return "Group{" +
                 "id=" + id +
                 ", activityName='" + activityName + '\'' +
-                ", email='" + memberCount + '\'' +
+                ", memberCount='" + memberCount + '\'' +
                 '}';
     }
 }
