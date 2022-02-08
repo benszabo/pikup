@@ -38,7 +38,7 @@ CREATE TABLE `user` (
 CREATE TABLE `activity` (
 `id` bigint NOT NULL AUTO_INCREMENT,
 `activity_name` varchar(255) NOT NULL,
-`activity_time` varchar(255) NOT NULL,
+`date_time` varchar(255) NOT NULL,
 `create_time` datetime DEFAULT NULL,
 `member_count` varchar(255) NOT NULL,
 `created_by` varchar(255) NOT NULL,

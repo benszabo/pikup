@@ -5,6 +5,8 @@ import com.pikup.api.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * The interface Activity repository.
  *
@@ -12,5 +14,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
-    Activity findByActivityName(String activity);
+
+    List<Activity> findByActivityName(String activity);
+
+    List<Activity> findActivityByMemberCount(int activity);
+
+    List<Activity> findByDateTime(String activity);
 }
