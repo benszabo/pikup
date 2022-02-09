@@ -1,10 +1,13 @@
 package com.pikup.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The type User.
@@ -18,6 +21,10 @@ public class User {
 
     @Id
     private long id;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "joinedUsers")
+    Set<Activity> activities = new HashSet<>();
 
     @Column(name = "username", nullable = false)
     private String username;
@@ -151,5 +158,9 @@ public class User {
                 ", password=" + password +
                 ", createdTime='" + createTime + '\'' +
                 '}';
+    }
+
+    public Set<Activity> getActivities() {
+        return activities;
     }
 }

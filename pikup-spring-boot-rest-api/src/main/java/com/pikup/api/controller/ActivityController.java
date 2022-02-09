@@ -2,7 +2,9 @@ package com.pikup.api.controller;
 
 import com.pikup.api.exception.ResourceNotFoundException;
 import com.pikup.api.model.Activity;
+import com.pikup.api.model.User;
 import com.pikup.api.repository.ActivityRepository;
+import com.pikup.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,9 @@ public class ActivityController {
 
     @Autowired
     private ActivityRepository activityRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * Get all activities list.
@@ -124,4 +129,30 @@ public class ActivityController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
+    /**
+     * Join a user to an activity.
+     *
+     * @param activityId the Activity id
+     * @param userId the User id
+     * @return the response entity
+     * @throws ResourceNotFoundException the resource not found exception
+     */
+
+    @RequestMapping(value = "/activities/{activityId}/users/{userId}", method = RequestMethod.PUT)
+    public Activity joinUserToActivity(
+            @PathVariable Long activityId, @PathVariable Long userId)
+            throws Exception {
+        Activity activity =
+                activityRepository
+                        .findById(activityId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found on :: " + activityId));
+        User user =
+                userRepository
+                        .findById(userId)
+                        .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
+
+        activity.joinUser(user);
+        return activityRepository.save(activity);
+    }
+
 }
