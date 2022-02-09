@@ -4,6 +4,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The type Activity.
@@ -17,6 +19,14 @@ public class Activity {
 
     @Id
     private long id;
+
+    @ManyToMany
+    @JoinTable(
+            name="users_joined",
+            joinColumns = @JoinColumn(name = "activity_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> joinedUsers = new HashSet<>();
 
     @Column(name = "created_by", nullable = false)
     private String createdBy;
@@ -148,5 +158,13 @@ public class Activity {
                 ", activityName='" + activityName + '\'' +
                 ", memberCount='" + memberCount + '\'' +
                 '}';
+    }
+
+    public Set<User> getJoinedUsers() {
+        return joinedUsers;
+    }
+
+    public void joinUser(User user) {
+        joinedUsers.add(user);
     }
 }
