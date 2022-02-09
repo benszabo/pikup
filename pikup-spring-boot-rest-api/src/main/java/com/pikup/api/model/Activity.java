@@ -40,8 +40,8 @@ public class Activity {
     @Column(name = "create_time")
     private Date createTime;
 
-    @Column(name = "activity_time", nullable = false)
-    private String activityTime;
+    @Column(name = "date_time", nullable = false)
+    private String dateTime;
 
     /**
      * Gets id.
@@ -98,39 +98,39 @@ public class Activity {
     }
 
     /**
-     * Gets created at.
+     * Gets createTime.
      *
-     * @return the created at
+     * @return the createTime
      */
     public Date getCreateTime() {
         return createTime;
     }
 
     /**
-     * Sets created at.
+     * Sets createTime.
      *
-     * @param createdAt the created at
+     * @param createTime the createTime
      */
-    public void setCreateTime(Date createdAt) {
-        this.createTime = createdAt;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     /**
-     * Gets role.
+     * Gets dateTime.
      *
-     * @return the role
+     * @return the dateTime
      */
-    public String getActivityTime() {
-        return activityTime;
+    public String getDateTime() {
+        return dateTime;
     }
 
     /**
-     * Sets role.
+     * Sets dateTime.
      *
-     * @param role the role
+     * @param role the dateTime
      */
-    public void setActivityTime(String role) {
-        this.activityTime = role;
+    public void setDateTime(String role) {
+        this.dateTime = role;
     }
 
     /**
@@ -156,7 +156,9 @@ public class Activity {
         return "Group{" +
                 "id=" + id +
                 ", activityName='" + activityName + '\'' +
+                ", createdBy='" + createdBy + '\'' +
                 ", memberCount='" + memberCount + '\'' +
+                ", dateTime='" + dateTime + '\'' +
                 '}';
     }
 

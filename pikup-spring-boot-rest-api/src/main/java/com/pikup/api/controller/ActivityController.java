@@ -46,10 +46,44 @@ public class ActivityController {
      * @param name the Activity name
      * @return the Activity by name
      */
-    @RequestMapping(value = "/activities/find/{activity}", method = RequestMethod.GET)
-    public ResponseEntity<Activity> getActivityByName(@PathVariable(value = "activity") String name) {
-        Activity activity = activityRepository.findByActivityName(name);
-        return ResponseEntity.ok().body(activity);
+    @RequestMapping(value = "/activities/findbyname/{name}", method = RequestMethod.GET)
+    public ResponseEntity<List<Activity>> getActivityByName(@PathVariable(value = "name") String name)
+            throws ResourceNotFoundException {
+        List<Activity> activities = activityRepository.findByActivityName(name);
+        if(activities == null)
+            throw new ResourceNotFoundException("Activity not found");
+        return ResponseEntity.ok().body(activities);
+    }
+
+    /**
+     * Gets Activity by member count.
+     *
+     * @param memberCount the Activity memberCount
+     * @return the Activity by memberCount
+     */
+    @RequestMapping(value = "/activities/findbymembercount/{memberCount}", method = RequestMethod.GET)
+    public ResponseEntity<List<Activity>> getActivityByMemberCount(@PathVariable(value = "memberCount") int memberCount)
+            throws ResourceNotFoundException {
+        List<Activity> activities = activityRepository.findActivityByMemberCount(memberCount);
+        if(activities == null)
+            throw new ResourceNotFoundException("No activities found");
+        return ResponseEntity.ok().body(activities);
+    }
+
+    /**
+     * Gets Activity by dateTime.
+     *
+     * @param dateTime the Activity dateTime
+     * @return the Activity by dateTime
+     * format: YYYY-MM-DD-HHMM
+     */
+    @RequestMapping(value = "/activities/findbydatetime/{dateTime}", method = RequestMethod.GET)
+    public ResponseEntity<List<Activity>> getActivityByTime(@PathVariable(value = "dateTime") String dateTime)
+            throws ResourceNotFoundException {
+        List<Activity> activities = activityRepository.findByDateTime(dateTime);
+        if(activities == null)
+            throw new ResourceNotFoundException("No activities found");
+        return ResponseEntity.ok().body(activities);
     }
 
     /**
@@ -65,7 +99,7 @@ public class ActivityController {
         Activity activity =
                 activityRepository
                         .findById(activityId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found on :: " + activityId));
+                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found"));
         return ResponseEntity.ok().body(activity);
     }
 
@@ -100,10 +134,10 @@ public class ActivityController {
         Activity activity =
                 activityRepository
                         .findById(activityId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found on :: " + activityId));
+                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found"));
 
         activity.setActivityName(activityDetails.getActivityName());
-        activity.setActivityTime(activityDetails.getActivityTime());
+        activity.setDateTime(activityDetails.getDateTime());
         activity.setMemberCount(activityDetails.getMemberCount());
 
         final Activity updatedActivity = activityRepository.save(activity);
@@ -122,7 +156,7 @@ public class ActivityController {
         Activity activity =
                 activityRepository
                         .findById(activityId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found on :: " + activityId));
+                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found"));
 
         activityRepository.delete(activity);
         Map<String, Boolean> response = new HashMap<>();

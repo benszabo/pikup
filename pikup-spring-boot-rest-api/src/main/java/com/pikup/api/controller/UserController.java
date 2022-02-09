@@ -6,6 +6,7 @@ import com.pikup.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,18 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("/login/{username}/{password}")
+    public ResponseEntity<User> getUser(@PathVariable(value = "username") String username,
+                                        @PathVariable(value = "password") String password) {
+        User user = userRepository.findByUsername(username);
+        if(user!=null && !user.getPassword().equals(password))
+            return ResponseEntity.status(403).body(null);
+        else if(user!=null && user.getPassword().equals(password))
+            return ResponseEntity.ok(user);
+        else
+            return ResponseEntity.status(404).body(null);
+    }
 
     /**
      * Get all users list.
