@@ -34,6 +34,11 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    private boolean enabled;
+
     /**
      * Gets id.
      *
@@ -142,6 +147,42 @@ public class User {
         this.role = role;
     }
 
+    /**
+     * Gets verificationCode.
+     *
+     * @return the verificationCode
+     */
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    /**
+     * Sets verificationCode.
+     *
+     * @param verificationCode the verificationCode
+     */
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    /**
+     * Gets enabled.
+     *
+     * @return the enabled
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Sets enabled.
+     *
+     * @param enabled the enabled
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -150,6 +191,8 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password=" + password +
                 ", createdTime='" + createTime + '\'' +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", enabled='" + enabled + '\'' +
                 '}';
     }
 }
