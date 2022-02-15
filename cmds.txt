@@ -1,0 +1,5 @@
+cd C:\CSEdegree\CSE550\Pikup\GitHub\pikup\Pikup\Pikup
+npx react-native start
+
+cd C:\CSEdegree\CSE550\Pikup\GitHub\pikup\Pikup\Pikup
+npx react-native run-android

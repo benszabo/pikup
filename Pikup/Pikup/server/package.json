@@ -1,0 +1,11 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "allow user to upload image",
+  "main": "index.js",
+  "scripts": {
+    "test": "qq"
+  },
+  "author": "Nathan",
+  "license": "ISC"
+}
