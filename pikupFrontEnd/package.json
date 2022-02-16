@@ -10,8 +10,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^5.1.0",
+    "axios": "^0.26.0",
+    "datetimepicker": "^0.1.39",
     "react": "17.0.2",
-    "react-native": "0.67.1"
+    "react-native": "0.67.1",
+    "react-native-modal-datetime-picker": "^13.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.16.12",
