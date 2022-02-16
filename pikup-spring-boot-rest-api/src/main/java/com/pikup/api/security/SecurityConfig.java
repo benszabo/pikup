@@ -16,6 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/user/v1/verify/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new BasicAuthFilter(authenticationManager()));

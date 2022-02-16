@@ -3,13 +3,16 @@ package com.pikup.api.controller;
 import com.pikup.api.exception.ResourceNotFoundException;
 import com.pikup.api.model.User;
 import com.pikup.api.repository.UserRepository;
+import com.pikup.api.service.UserService;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +30,17 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
+    /**
+     * Used for user login validation. Front end passes username and password via webservice call.
+     * If username/password combination is correct, return 200 response.
+     * If password is incorrect, return 403 response.
+     * If username search doesn't return a match, 404 is returned.
+     *
+     * @return registered boolean
+     */
     @GetMapping("/login/{username}/{password}")
     public ResponseEntity<User> getUser(@PathVariable(value = "username") String username,
                                         @PathVariable(value = "password") String password) {
@@ -37,6 +51,45 @@ public class UserController {
             return ResponseEntity.ok(user);
         else
             return ResponseEntity.status(404).body(null);
+    }
+
+    /**
+     * Creates user object in database with a verification code and enabled set to false with a created time.
+     * Sends verification email for user to verify their email address.
+     *
+     * @return registered boolean
+     */
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public Map<String, Boolean> registerUser(@Validated @RequestBody User user, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+        user.setVerificationCode(RandomString.make(64));
+        user.setEnabled(false);
+        user.setCreateTime(new Date());
+        userRepository.save(user);
+        Map<String, Boolean> response = new HashMap<>();
+        userService.sendVerificationEmail(user, request);
+        response.put("registered", Boolean.TRUE);
+        return response;
+    }
+
+    /**
+     * Searches for user in database by verification code.
+     * If found, verification code is set to null, enabled is set to true.
+     *
+     * @return whether verification was successful or not
+     */
+    @GetMapping("/verify/{code}")
+    public String verifyUser(@PathVariable("code") String code) {
+        if (userService.verify(code)) {
+            return "<div class=\"container text-center\">\n" +
+                    "    <h3>Congratulations, your account has been verified.</h3>\n" +
+//                    "    <h4><a th:href=\"/@{/login}\">Click here to Login</a></h4>\n" +
+                    "</div>";
+        } else {
+            return "<div class=\"container text-center\">\n" +
+                    "    <h3>Sorry, we could not verify account. It may be already verified,\n" +
+                    "        or verification code is incorrect.</h3>\n" +
+                    "</div>";
+        }
     }
 
     /**

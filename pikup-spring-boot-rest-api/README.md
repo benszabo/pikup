@@ -25,6 +25,8 @@ CREATE TABLE `user` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `id` int NOT NULL AUTO_INCREMENT,
   `role` varchar(255) DEFAULT NULL,
+  `verification_code` varchar(64),
+  `enabled` BIT(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`),
