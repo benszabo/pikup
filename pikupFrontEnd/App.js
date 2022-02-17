@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import {decode as atob, encode as btoa} from 'base-64';
+
 import {
   View,
   useState,
@@ -16,7 +18,7 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const burl = 'http://localhost:3000';
+const burl = 'http://localhost:8080';
 // const url = 'https://reactnative.dev/movies.json';
 
 const App = () => {
@@ -41,13 +43,21 @@ const App = () => {
   };
 
   const postData = () => {
+    var headers = new Headers();
+    headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
     axios
-      .post(`${burl}/users`, {
-        id: text,
-        first_name: 'Cristobal',
-        last_name: 'Short',
-        email: 'cristobal.short@outook.com',
-      })
+      .post(
+        `${burl}/api/v1/users`,
+        {
+          username: 'John',
+          email: 'john@gmail.com',
+          password: 'p@sSword',
+          create_time: '2020-12-24',
+          id: '5',
+          role: 'participant',
+        },
+        headers,
+      )
       .then(response => {
         setData(response.data[-1].event);
       })
