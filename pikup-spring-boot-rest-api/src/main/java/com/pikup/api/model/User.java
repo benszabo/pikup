@@ -1,10 +1,13 @@
 package com.pikup.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The type User.
@@ -18,6 +21,10 @@ public class User {
 
     @Id
     private long id;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "joinedUsers")
+    Set<Activity> activities = new HashSet<>();
 
     @Column(name = "username", nullable = false)
     private String username;
@@ -33,6 +40,11 @@ public class User {
 
     @Column(name = "role", nullable = false)
     private String role;
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    private boolean enabled;
 
     /**
      * Gets id.
@@ -142,6 +154,42 @@ public class User {
         this.role = role;
     }
 
+    /**
+     * Gets verificationCode.
+     *
+     * @return the verificationCode
+     */
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    /**
+     * Sets verificationCode.
+     *
+     * @param verificationCode the verificationCode
+     */
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    /**
+     * Gets enabled.
+     *
+     * @return the enabled
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Sets enabled.
+     *
+     * @param enabled the enabled
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -150,6 +198,12 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password=" + password +
                 ", createdTime='" + createTime + '\'' +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", enabled='" + enabled + '\'' +
                 '}';
+    }
+
+    public Set<Activity> getActivities() {
+        return activities;
     }
 }
