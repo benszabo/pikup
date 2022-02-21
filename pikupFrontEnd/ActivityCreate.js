@@ -1,41 +1,28 @@
-import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
 import axios from 'axios';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {decode as atob, encode as btoa} from 'base-64';
-import SearchInput, {createFilter} from 'react-native-search-filter';
+
 import {
-  FlatList,
-  StyleSheet,
   View,
+  useState,
+  useEffect,
   Button,
-  StatusBar,
   Text,
+  StyleSheet,
 } from 'react-native';
-import {SafeAreaView, TextInput} from 'react-native';
+import {
+  SafeAreaView,
+  TextInput,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DatePicker from 'react-native-date-picker';
 
-// const user_url = 'http://localhost:8080/user/v1/users';
+const user_url = 'http://localhost:8080/user/v1/users';
 const act_url = 'http://localhost:8080/activity/v1/activities';
-const Stack = createNativeStackNavigator();
 
-const Home = ({navigation}) => {
-  const onPressHandlerActivityCreate = () => {
-    navigation.navigate('Activity');
-  };
-  const onPressHandlerEvents = () => {
-    navigation.navigate('Events');
-  };
-  return (
-    <View>
-      <Button title="Create Activity" onPress={onPressHandlerActivityCreate} />
-      <Button title="View Events" onPress={onPressHandlerEvents} />
-    </View>
-  );
-};
-
-const Activity = ({navigation}) => {
+const ActApp = () => {
   const [isLoading, setLoading] = React.useState(true);
   const [event, setEvent] = React.useState(null);
   const [eventDetails, onChangeDetails] = React.useState(null);
@@ -46,10 +33,6 @@ const Activity = ({navigation}) => {
   const [open, setOpen] = React.useState(false);
   const [participants, onChangeParticipants] = React.useState(null);
   const [data, setData] = React.useState('');
-
-  const onPressHanlder = () => {
-    navigation.navigate('Home');
-  };
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -100,9 +83,6 @@ const Activity = ({navigation}) => {
   };
   return (
     <SafeAreaView>
-      <View>
-        <Button title="Home" onPress={onPressHanlder} />
-      </View>
       <Text style={styles.textStyle}>Event Name</Text>
       <TextInput
         style={styles.input}
@@ -148,64 +128,6 @@ const Activity = ({navigation}) => {
   );
 };
 
-const Events = ({navigation}) => {
-  const [activities, setActivities] = useState([]);
-
-  const Act = ({actName, actTime}) => (
-    <View style={flatliststyles.item}>
-      <Text style={flatliststyles.title}>{actName}</Text>
-      <Text style={flatliststyles.time}>{actTime}</Text>
-    </View>
-  );
-  const renderItem = ({item}) => (
-    <Act actName={item.activityName} Act actTime={item.dateTime} />
-  );
-
-  const onPressHandlerGoHome = () => {
-    navigation.navigate('Home');
-  };
-  useEffect(() => {
-    axios({
-      method: 'get',
-      url: act_url,
-    }).then(response => {
-      //   console.log(response.status);
-      setActivities(response.data);
-      //   console.log(response.data);
-    });
-  }, []);
-
-  return (
-    <View style={flatliststyles.container}>
-      <FlatList
-        data={activities}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
-    </View>
-  );
-};
-
-const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={{title: 'Home'}} />
-        <Stack.Screen
-          name="Activity"
-          component={Activity}
-          options={{title: 'Creating Activity'}}
-        />
-        <Stack.Screen
-          name="Events"
-          component={Events}
-          options={{title: 'Events'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
 const styles = StyleSheet.create({
   input: {
     height: 40,
@@ -217,23 +139,5 @@ const styles = StyleSheet.create({
     margin: 12,
   },
 });
-const flatliststyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#E3EDFB',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
-  time: {
-    fonttSize: 16,
-  },
-});
 
-export default App;
+export default ActApp;

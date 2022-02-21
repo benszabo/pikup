@@ -19,15 +19,6 @@ public class Activity {
 
     @Id
     private long id;
-
-    @ManyToMany
-    @JoinTable(
-            name="users_joined",
-            joinColumns = @JoinColumn(name = "activity_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> joinedUsers = new HashSet<>();
-
     @Column(name = "created_by", nullable = false)
     private String createdBy;
 
@@ -42,6 +33,13 @@ public class Activity {
 
     @Column(name = "date_time", nullable = false)
     private String dateTime;
+    @ManyToMany
+    @JoinTable(
+            name="users_joined",
+            joinColumns = @JoinColumn(name = "activity_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> joinedUsers = new HashSet<>();
 
     /**
      * Gets id.
@@ -73,10 +71,10 @@ public class Activity {
     /**
      * Sets first name.
      *
-     * @param firstName the first name
+     * @param activityName the first name
      */
-    public void setActivityName(String firstName) {
-        this.activityName = firstName;
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
     }
 
     /**

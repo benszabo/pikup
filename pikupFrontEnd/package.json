@@ -11,12 +11,18 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^5.1.0",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^6.5.0",
     "axios": "^0.26.0",
     "base-64": "^1.0.0",
     "datetimepicker": "^0.1.39",
     "react": "17.0.2",
     "react-native": "0.67.1",
-    "react-native-modal-datetime-picker": "^13.0.1"
+    "react-native-date-picker": "^4.1.5",
+    "react-native-modal-datetime-picker": "^13.0.1",
+    "react-native-safe-area-context": "^3.4.1",
+    "react-native-screens": "^3.12.0",
+    "react-native-search-filter": "^0.1.5"
   },
   "devDependencies": {
     "@babel/core": "7.16.12",
