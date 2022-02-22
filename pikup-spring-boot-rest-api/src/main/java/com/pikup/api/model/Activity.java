@@ -167,4 +167,9 @@ public class Activity {
     public void joinUser(User user) {
         joinedUsers.add(user);
     }
+
+    public void removeUser(User user) {
+        joinedUsers.remove(user);
+    }
+
 }

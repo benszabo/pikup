@@ -189,4 +189,30 @@ public class ActivityController {
         return activityRepository.save(activity);
     }
 
+    /**
+     * Remove a user from an activity.
+     *
+     * @param activityId the Activity id
+     * @param userId the User id
+     * @return the response entity
+     * @throws ResourceNotFoundException the resource not found exception
+     */
+
+    @RequestMapping(value = "/activities/{activityId}/users/{userId}", method = RequestMethod.DELETE)
+    public Activity removeUserFromActivity(
+            @PathVariable Long activityId, @PathVariable Long userId)
+            throws Exception {
+        Activity activity =
+                activityRepository
+                        .findById(activityId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Activity not found on :: " + activityId));
+        User user =
+                userRepository
+                        .findById(userId)
+                        .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
+
+        activity.removeUser(user);
+        return activityRepository.save(activity);
+    }
+
 }
