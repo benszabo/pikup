@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e477f58f-673a-4e88-a9e4-37def6d3258d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pikup-spring-boot-rest-api/src/main/java/com/pikup/api/model/Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pikup-spring-boot-rest-api/src/main/java/com/pikup/api/model/Activity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pikup-spring-boot-rest-api/src/main/java/com/pikup/api/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/pikup-spring-boot-rest-api/src/main/java/com/pikup/api/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pikupFrontEnd/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pikupFrontEnd/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pikupFrontEnd/android/app/src/main/java/com/pikupfrontend/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/android/app/src/main/java/com/pikupfrontend/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pikupFrontEnd/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/android/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pikupFrontEnd/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/ios/Podfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pikupFrontEnd/ios/pikupFrontEnd.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/ios/pikupFrontEnd.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pikupFrontEnd/ios/pikupFrontEnd/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/ios/pikupFrontEnd/Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pikupFrontEnd/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pikupFrontEnd/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/pikupFrontEnd/package.json" afterDir="false" />
     </list>

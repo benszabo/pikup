@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import axios from 'axios';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {decode as atob, encode as btoa} from 'base-64';
+import {SearchBar} from 'react-native-elements';
 import SearchInput, {createFilter} from 'react-native-search-filter';
 import {
   FlatList,
@@ -12,6 +13,7 @@ import {
   View,
   Button,
   StatusBar,
+  TouchableOpacity,
   Text,
 } from 'react-native';
 import {SafeAreaView, TextInput} from 'react-native';
@@ -150,6 +152,9 @@ const Activity = ({navigation}) => {
 
 const Events = ({navigation}) => {
   const [activities, setActivities] = useState([]);
+  const [search, setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [masterDataSource, setMasterDataSource] = useState([]);
 
   const Act = ({actName, actTime}) => (
     <View style={flatliststyles.item}>
@@ -171,15 +176,74 @@ const Events = ({navigation}) => {
     }).then(response => {
       //   console.log(response.status);
       setActivities(response.data);
+      setFilteredDataSource(response.data);
+      setMasterDataSource(response.data);
       //   console.log(response.data);
     });
   }, []);
-
+  const searchFilterFunction = text => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = masterDataSource.filter(function (item) {
+        const itemData = item.activityName
+          ? item.activityName.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(masterDataSource);
+      setSearch(text);
+    }
+  };
+  const ItemView = ({item}) => {
+    return (
+      // Flat List Item
+      <Text s onPress={() => getItem(item)}>
+        {item.activityName.toUpperCase()}
+        {' - '}
+        {item.dateTime}
+      </Text>
+    );
+  };
+  const ItemSeparatorView = () => {
+    return (
+      // Flat List Item Separator
+      <View
+        style={{
+          height: 0.5,
+          width: '100%',
+          backgroundColor: '#C8C8C8',
+        }}
+      />
+    );
+  };
+  const getItem = item => {
+    // Function for click on an item
+    alert('Id : ' + item.id + ' Title : ' + item.activityName);
+  };
   return (
-    <View style={flatliststyles.container}>
+    <View style={searchStyles.container}>
+      <SearchBar
+        round
+        searchIcon={{size: 24}}
+        onChangeText={text => searchFilterFunction(text)}
+        onClear={text => searchFilterFunction('')}
+        placeholder="Type Here..."
+        value={search}
+      />
       <FlatList
-        data={activities}
-        renderItem={renderItem}
+        data={filteredDataSource}
+        // renderItem={renderItem}
+        renderItem={ItemView}
+        ItemSeparatorComponent={ItemSeparatorView}
         keyExtractor={item => item.id}
       />
     </View>
@@ -233,6 +297,14 @@ const flatliststyles = StyleSheet.create({
   },
   time: {
     fonttSize: 16,
+  },
+});
+const searchStyles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+  },
+  itemStyle: {
+    padding: 10,
   },
 });
 
