@@ -87,3 +87,8 @@ The app will start running at <http://localhost:8080> with basic auth user/passw
             }
     
     DELETE /user/v1/users/{id}
+
+**8. Deploy to Heroku with command below in project root**
+```
+heroku war:deploy pikup-spring-boot-rest-api/target/pikup-spring-boot-rest-api-1.0.0.war --app pikup
+```
