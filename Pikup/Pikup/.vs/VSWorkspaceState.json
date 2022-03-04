@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\screens",
+    "\\src\\screens\\EditProfile",
+    "\\src\\screens\\Events",
+    "\\src\\screens\\Explore",
+    "\\src\\screens\\Login",
+    "\\src\\screens\\Profile",
+    "\\src\\screens\\Register",
+    "\\src\\screens\\Settings"
+  ],
+  "PreviewInSolutionExplorer": false
+}
