@@ -33,6 +33,22 @@ public class Activity {
 
     @Column(name = "date_time", nullable = false)
     private String dateTime;
+
+    @Column(name = "activity_street", nullable = false)
+    private String activityStreet;
+
+    @Column(name = "activity_city", nullable = false)
+    private String activityCity;
+
+    @Column(name = "activity_state", nullable = false)
+    private String activityState;
+
+    @Column(name = "activity_zip", nullable = false)
+    private String activityZip;
+
+    @Column(name = "activity_description", nullable = false)
+    private String activityDescription;
+
     @ManyToMany
     @JoinTable(
             name="users_joined",
@@ -149,14 +165,92 @@ public class Activity {
         this.createdBy = createdBy;
     }
 
+    /**
+     * Gets activityStreet.
+     *
+     * @return the activityStreet
+     */
+    public String getActivityStreet() {return activityStreet;}
+    /**
+     * Sets activityStreet.
+     *
+     * @param activityStreet the activityStreet
+     */
+    public void setActivityStreet(String activityStreet) {
+        this.activityStreet = activityStreet;
+    }
+
+    /**
+     * Gets activityCity.
+     *
+     * @return the activityCity
+     */
+    public String getActivityCity() {return activityCity;}
+
+    /**
+     * Sets activityCity.
+     *
+     * @param activityCity the activityCity
+     */
+    public void setActivityCity(String activityCity) {this.activityCity = activityCity;}
+
+    /**
+     * Gets activityState.
+     *
+     * @return the activityState
+     */
+    public String getActivityState() {return activityState;}
+
+    /**
+     * Sets activityState.
+     *
+     * @param activityState the activityState
+     */
+    public void setActivityState(String activityState) {this.activityState = activityState;}
+
+    /**
+     * Gets activityZip.
+     *
+     * @return the activityZip
+     */
+    public String getActivityZip() {return activityZip;}
+
+    /**
+     * Sets activityZip.
+     *
+     * @param activityZip the activityZip
+     */
+    public void setActivityZip(String activityZip) {this.activityZip = activityZip;}
+
+    /**
+     * Gets activityDescription.
+     *
+     * @return the activityDescription
+     */
+    public String getActivityDescription() {return activityDescription;}
+
+    /**
+     * Sets activityDescription.
+     *
+     * @param activityDescription the activityDescription
+     */
+    public void setActivityDescription(String activityDescription) {this.activityDescription = activityDescription;}
+
     @Override
     public String toString() {
-        return "Group{" +
+        return "Activity{" +
                 "id=" + id +
-                ", activityName='" + activityName + '\'' +
                 ", createdBy='" + createdBy + '\'' +
-                ", memberCount='" + memberCount + '\'' +
+                ", activityName='" + activityName + '\'' +
+                ", memberCount=" + memberCount +
+                ", createTime=" + createTime +
                 ", dateTime='" + dateTime + '\'' +
+                ", activityStreet='" + activityStreet + '\'' +
+                ", activityCity='" + activityCity + '\'' +
+                ", activityState='" + activityState + '\'' +
+                ", activityZip='" + activityZip + '\'' +
+                ", activityDescription='" + activityDescription + '\'' +
+                ", joinedUsers=" + joinedUsers +
                 '}';
     }
 
