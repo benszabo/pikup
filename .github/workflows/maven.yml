@@ -19,4 +19,5 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      working-directory: ./pikup-spring-boot-rest-api
       run: mvn --batch-mode --update-snapshots verify
