@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -21,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .addFilter(new BasicAuthFilter(authenticationManager()));
 
-        http.cors();
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
     }
 
     @Override
