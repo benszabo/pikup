@@ -39,10 +39,13 @@ import {
   Text,
 } from 'react-native';
 import {SafeAreaView, TextInput} from 'react-native';
+import Cookies from 'js-cookie';
 
 // const user_url = 'http://localhost:8080/user/v1/users';
-const act_url = 'http://localhost:8080/activity/v1/activities';
+const act_url = 'https://pikup.herokuapp.com/activity/v1/activities';
+// const act_url = 'http://localhost:8080/activity/v1/activities';
 const StackNav = createNativeStackNavigator();
+var Buffer = require('buffer/').Buffer; // note: the trailing slash is important!
 
 const Home = ({navigation}) => {
   const onPressHandlerActivityCreate = () => {
@@ -59,7 +62,7 @@ const Home = ({navigation}) => {
   );
 };
 
-const Card = ({activity, datetime}) => {
+const Card = ({activity, datetime, eventDescr, loc, participantCount}) => {
   const cardImages = {
     Baseball: require('./Images/Baseball/1.jpeg'),
     Basketball: require('./Images/Basketball/1.jpeg'),
@@ -68,6 +71,7 @@ const Card = ({activity, datetime}) => {
     Soccer: require('./Images/Soccer/1.jpeg'),
     Tennis: require('./Images/Tennis/1.jpeg'),
   };
+
   return (
     <Pressable onPress={() => alert(`rsvp page here for ${activity}`)}>
       <Box bg="white" shadow={2} rounded="lg" maxWidth="100%">
@@ -81,11 +85,24 @@ const Card = ({activity, datetime}) => {
         <Stack space={4} p={[4, 4, 8]}>
           <Text color="gray.400">{activity}</Text>
           <Heading size={['md', 'lg', 'md']} noOfLines={2}>
-            Details here. Come join for a fun game in the park!
+            {eventDescr}
           </Heading>
           <Text lineHeight={[5, 5, 7]} noOfLines={[4, 4, 2]} color="gray.700">
-            {datetime}, Location
+            {datetime}, {loc}
           </Text>
+          <NativeButton
+            size="sm"
+            variant="outline"
+            colorScheme="secondary"
+            onPress={() => {
+              if (participantCount > 0) {
+                alert('Succesfully Joined');
+              } else {
+                alert('Unable to Join');
+              }
+            }}>
+            CLICK TO RSVP
+          </NativeButton>
         </Stack>
       </Box>
     </Pressable>
@@ -105,6 +122,7 @@ const Activity = ({navigation}) => {
   const [city, setCity] = React.useState('');
   const [state, setState] = React.useState('');
   const [address, setAddress] = React.useState('');
+  const [zip, setZip] = React.useState('');
 
   const onPressHanlder = () => {
     navigation.navigate('Home');
@@ -126,37 +144,52 @@ const Activity = ({navigation}) => {
   };
 
   const callAPI = () => {
-    axios({
-      method: 'get',
-      url: act_url,
-    }).then(response => {
+    var headers = new Headers();
+    headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
+    axios(
+      {
+        method: 'get',
+        url: act_url,
+      },
+      headers,
+    ).then(response => {
       console.log(response.status);
       console.log(response.data);
       setData(response.data.firstname);
     });
   };
 
+  var path = 'https://pikup.herokuapp.com/activity/v1/activities';
+  var username = 'admin';
+  var password = 'admin';
+
   const postData = () => {
-    var headers = new Headers();
-    headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
-    axios
-      .post(
-        act_url,
-        {
-          createdBy: 'Cristobal',
-          activityName: activity,
-          memberCount: members,
-          dateTime: date,
-        },
-        headers,
-      )
+    var basicAuth = 'Basic ' + btoa(username + ':' + password);
+    axios(path, {
+      headers: {Authorization: basicAuth},
+      method: 'post',
+      url: path,
+      data: {
+        id: 2,
+        createdBy: 'Admin2',
+        activityName: activity,
+        memberCount: members,
+        dateTime: date,
+        activityStreet: address,
+        activityCity: city,
+        activityState: state,
+        activityZip: zip,
+        activityDescription: eventDetails,
+      },
+    })
       .then(response => {
         setData(console.log(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response.data);
       });
   };
+
   return (
     <NativeBaseProvider>
       <ScrollView>
@@ -231,6 +264,14 @@ const Activity = ({navigation}) => {
                 onChangeText={setAddress}
                 value={address}
               />
+              <Input
+                mx="3"
+                placeholder="Zip"
+                w="100%"
+                maxWidth="360px"
+                onChangeText={setZip}
+                value={zip}
+              />
             </Box>
           </Stack>
           <Divider />
@@ -280,31 +321,35 @@ const Events = ({navigation}) => {
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [filter, setFilter] = useState('');
 
-  const Act = ({actName, actTime}) => (
-    <View style={flatliststyles.item}>
-      <Text style={flatliststyles.title}>{actName}</Text>
-      <Text style={flatliststyles.time}>{actTime}</Text>
-    </View>
-  );
-  const renderItem = ({item}) => (
-    <Act actName={item.activityName} Act actTime={item.dateTime} />
-  );
-
   const onPressHandlerGoHome = () => {
     navigation.navigate('Home');
   };
+  // const CORS_PROXY_API = `https://cors.ryanking13.workers.dev/?u=`;
+  var path = 'https://pikup.herokuapp.com/activity/v1/activities';
+  var username = 'admin';
+  var password = 'admin';
+
   useEffect(() => {
-    axios({
+    var basicAuth = 'Basic ' + btoa(username + ':' + password);
+    axios(path, {
+      headers: {Authorization: basicAuth},
       method: 'get',
-      url: act_url,
-    }).then(response => {
-      //   console.log(response.status);
-      setActivities(response.data);
-      setFilteredDataSource(response.data);
-      setMasterDataSource(response.data);
-      //   console.log(response.data);
-    });
+      url: path,
+    }).then(
+      response => {
+        console.log(response.status);
+        console.log(response.data);
+        setActivities(response.data);
+        setFilteredDataSource(response.data);
+        setMasterDataSource(response.data);
+      },
+      error => {
+        console.log(error.response.data);
+      },
+    );
+    console.log(path);
   }, []);
+
   const searchFilterFunction = text => {
     // Check if searched text is not blank
     if (text) {
@@ -328,7 +373,15 @@ const Events = ({navigation}) => {
     }
   };
   const ItemView = ({item}) => {
-    return <Card activity={item.activityName} datetime={item.dateTime} />;
+    return (
+      <Card
+        activity={item.activityName}
+        datetime={item.dateTime}
+        eventDescr={item.activityDescription}
+        loc={item.activityCity}
+        participantCount={item.memberCount}
+      />
+    );
   };
   const ItemSeparatorView = () => {
     return (
