@@ -2,14 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\screens",
-    "\\src\\screens\\EditProfile",
-    "\\src\\screens\\Events",
-    "\\src\\screens\\Explore",
-    "\\src\\screens\\Login",
-    "\\src\\screens\\Profile",
-    "\\src\\screens\\Register",
-    "\\src\\screens\\Settings"
+    "\\src\\components",
+    "\\src\\components\\Explore",
+    "\\src\\components\\Login",
+    "\\src\\components\\Register",
+    "\\src\\context",
+    "\\src\\context\\initialStates",
+    "\\src\\helpers",
+    "\\src\\screens"
   ],
   "PreviewInSolutionExplorer": false
 }

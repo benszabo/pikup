@@ -5,7 +5,6 @@ import styles from '../../components/styles';
 import { LOGIN } from '../../constants/routeNames';
 import Container from '../Container';
 import Input from '../Input';
-import envs from '../../config/env'
 
 const RegisterComponent = ({ onSubmit, onChange, form, errors }) => {
     const [value, onChangeText] = React.useState('');

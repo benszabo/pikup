@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RegisterComponent from '../../components/Register';
+import envs from '../../config/env';
+import registerUser from '../../context/actions/registerUser';
+import { GlobalContext } from '../../context/Provider';
+import axiosInstance from '../../helpers/axiosInstance';
+
 const Register = () => {
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
+    const { authDispatch } = useContext(GlobalContext);
+    const { DEV_BACKEND_URL } = envs;
+
+    console.log('BACKEND_URL: >> ', DEV_BACKEND_URL);
+    console.log('BACKEND_URL: >> ', authDispatch);
+    
 
     const onChange = ({ name, value }) => {
         setForm({ ...form, [name]: value });
@@ -40,8 +51,11 @@ const Register = () => {
         }
         if (!form.email) {
             setErrors((prev) => {
-                return {...prev, email: "*Email is required" };
+                return { ...prev, email: "*Email is required" };
             });
+        }
+        if (Object.values(form).length > 3) {
+            registerUser(form)(authDispatch);
         }
     };
     return (

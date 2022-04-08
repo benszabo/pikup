@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, Component, useContext } from 'react';
 import LoginComponent from '../../components/Login';
-import authState from '../../context/initialStates/authState';
+import loginUser from '../../context/actions/loginUser';
+import { GlobalContext } from '../../context/Provider';
+
 
 const Login = () => {
+    const { authDispatch, authState: { error, loading }, } = useContext(GlobalContext);
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
 
@@ -22,36 +25,21 @@ const Login = () => {
     const onSubmit = ({ name, value }) => {
         //validations
         console.log('form :>> ', form);
-        //webservice call for login
+       
         if (!form.userName) {
             setErrors((prev) => {
                 return { ...prev, userName: "*Username is required" };
             });
         }
-        else if (!form.password) {
+        if (!form.password) {
             setErrors((prev) => {
                 return { ...prev, password: "*Password is required" };
             });
         }
-        else {
-            let base64 = require('base-64');
-                fetch("https://pikup.herokuapp.com/user/v1/login/" + form.userName + "/" + form.password, {
-                    "method": "GET",
-                    "headers": {
-                        "Authorization": 'Basic ' + base64.encode('admin:admin')
-                    }
-                })
-                    .then(response => response.json())
-                    .then(response => {
-                        console.log(response.content);
-                        console.log(response.originator.name)
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }
-
-        
+         //webservice call for login
+        if (Object.values(form).length === 2) {
+            loginUser(form)(authDispatch);
+        }        
     };
         return (
             <LoginComponent

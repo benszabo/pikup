@@ -12,5 +12,6 @@ export const EDITPROFILE = 'EditProfile';
 export const PROFILE_NAVIGATOR = 'Profile';
 export const BOTTOM_TAB_NAVIGATOR = 'BottomTabNavigator';
 export const DEFAULT_PROFILE_PIC = '../../assets/defaultProfilePic.png';
-export const PIKUP_IMAGE = '../../assets/pikup.png'
+export const PIKUP_IMAGE = '../../assets/pikup.png';
+export const APP_NAVIGATOR = '';
 
