@@ -40,6 +40,7 @@ import {
 } from 'react-native';
 import { SafeAreaView, TextInput } from 'react-native';
 import Cookies from 'js-cookie';
+import styles from '../styles';
 
 // const user_url = 'http://localhost:8080/user/v1/users';
 const act_url = 'https://pikup.herokuapp.com/activity/v1/activities';
@@ -48,6 +49,7 @@ const StackNav = createNativeStackNavigator();
 var Buffer = require('buffer/').Buffer; // note: the trailing slash is important!
 
 const Home = ({ navigation }) => {
+
     const onPressHandlerActivityCreate = () => {
         navigation.navigate('Activity');
     };
@@ -55,10 +57,13 @@ const Home = ({ navigation }) => {
         navigation.navigate('Events');
     };
     return (
-        <View>
+        <View style={styles.color}>
             <Button title="Create Activity" onPress={onPressHandlerActivityCreate} />
             <Button title="View Events" onPress={onPressHandlerEvents} />
+            <View style={styles.freeSpace1 }>
+            </View>
         </View>
+        
     );
 };
 
@@ -105,6 +110,8 @@ const Card = ({ activity, datetime, eventDescr, loc, participantCount }) => {
                     </NativeButton>
                 </Stack>
             </Box>
+            <View style={styles.freeSpace2}>
+            </View>
         </Pressable>
     );
 };
@@ -192,7 +199,7 @@ const Activity = ({ navigation }) => {
 
     return (
         <NativeBaseProvider>
-            <ScrollView>
+            <ScrollView style={styles.color}>
                 <VStack space="2.5" mt="4" px="8">
                     <Heading size="md">Activity</Heading>
                     <Stack direction="row" mb="2.5" mt="1.5" space={3}>
@@ -308,6 +315,8 @@ const Activity = ({ navigation }) => {
                     <NativeButton onPress={postData} size="sm" colorScheme="blue">
                         Create Activity!
                     </NativeButton>
+                    <View style={styles.freeSpace}>
+                    </View>
                 </VStack>
             </ScrollView>
         </NativeBaseProvider>
@@ -409,7 +418,7 @@ const Events = ({ navigation }) => {
     };
     return (
         <NativeBaseProvider>
-            <View style={searchStyles.container}>
+            <View style={styles.color}>
                 <SearchBar
                     round
                     searchIcon={{ size: 24 }}
@@ -423,7 +432,9 @@ const Events = ({ navigation }) => {
                     renderItem={ItemView}
                     ItemSeparatorComponent={ItemSeparatorView}
                     keyExtractor={item => item.id}
+                    style={styles.freeSpace}
                 />
+                
             </View>
         </NativeBaseProvider>
     );
@@ -431,7 +442,7 @@ const Events = ({ navigation }) => {
 
 const ExploreComponent = () => {
         return (
-            <StackNav.Navigator>
+            <StackNav.Navigator >
                 <StackNav.Screen
                     name="Home"
                     component={Home}
@@ -451,7 +462,7 @@ const ExploreComponent = () => {
     );
 };
 
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
     input: {
         height: 40,
         margin: 12,
@@ -461,7 +472,7 @@ const styles = StyleSheet.create({
     textStyle: {
         margin: 12,
     },
-});
+}); */
 const flatliststyles = StyleSheet.create({
     container: {
         flex: 1,

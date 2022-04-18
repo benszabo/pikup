@@ -24,7 +24,7 @@ const ProfileComponent = ({sheetRef, openSheet, closeSheet, localFile, onFileSel
                     </TouchableOpacity>
                 <View style={{ padding: 20 }}>
                 </View>
-                <Text style={styles.baseText}>YourName</Text>
+                <Text style={styles.baseText}>benszabo</Text>
                 </View>
                 <View style={styles.buttonView}>
                     <Button

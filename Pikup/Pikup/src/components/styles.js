@@ -8,6 +8,15 @@ export default StyleSheet.create({
         borderRadius: 10,
         
     },
+    freeSpace: {
+        padding: 60,
+    },
+    freeSpace1: {
+        padding: 300,
+    },
+    freeSpace2: {
+        padding: 100,
+    },
     wrapper: {
         height: 40,
         borderWidth: 2,

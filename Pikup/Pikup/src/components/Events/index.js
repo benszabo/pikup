@@ -8,7 +8,7 @@ import styles from '../styles';
 const EventComponent = () => {
     return (
         <Container style={{}}>
-            <Text style={styles.baseText}> Hello from Events </Text>
+            <Text style={styles.baseText}> Coming Soon!</Text>
     </Container >
     );
 }

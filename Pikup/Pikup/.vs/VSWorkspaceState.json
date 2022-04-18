@@ -3,13 +3,14 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\Explore",
-    "\\src\\components\\Login",
-    "\\src\\components\\Register",
-    "\\src\\context",
-    "\\src\\context\\initialStates",
-    "\\src\\helpers",
-    "\\src\\screens"
+    "\\src\\components\\Events",
+    "\\src\\components\\Input",
+    "\\src\\components\\Profile",
+    "\\src\\screens",
+    "\\src\\screens\\Events",
+    "\\src\\screens\\Profile",
+    "\\src\\screens\\Register"
   ],
+  "SelectedNode": "\\src\\components\\Profile\\index.js",
   "PreviewInSolutionExplorer": false
 }
