@@ -62,7 +62,15 @@ const Home = ({navigation}) => {
   );
 };
 
-const Card = ({activity, datetime, eventDescr, loc, participantCount}) => {
+const Card = ({
+  activity,
+  datetime,
+  eventDescr,
+  city,
+  address,
+  zip,
+  participantCount,
+}) => {
   const cardImages = {
     Baseball: require('./Images/Baseball/1.jpeg'),
     Basketball: require('./Images/Basketball/1.jpeg'),
@@ -73,7 +81,12 @@ const Card = ({activity, datetime, eventDescr, loc, participantCount}) => {
   };
 
   return (
-    <Pressable onPress={() => alert(`rsvp page here for ${activity}`)}>
+    <Pressable
+      onPress={() =>
+        alert(
+          `Location: ${city}, ${address} ${zip} Members Needed: ${participantCount}`,
+        )
+      }>
       <Box bg="white" shadow={2} rounded="lg" maxWidth="100%">
         <Image
           source={cardImages[activity]}
@@ -88,7 +101,7 @@ const Card = ({activity, datetime, eventDescr, loc, participantCount}) => {
             {eventDescr}
           </Heading>
           <Text lineHeight={[5, 5, 7]} noOfLines={[4, 4, 2]} color="gray.700">
-            {datetime}, {loc}
+            {datetime}, {city}
           </Text>
           <NativeButton
             size="sm"
@@ -101,7 +114,7 @@ const Card = ({activity, datetime, eventDescr, loc, participantCount}) => {
                 alert('Unable to Join');
               }
             }}>
-            CLICK TO RSVP
+            CLICK TO RSVP!
           </NativeButton>
         </Stack>
       </Box>
@@ -171,7 +184,7 @@ const Activity = ({navigation}) => {
       url: path,
       data: {
         id: 2,
-        createdBy: 'Admin2',
+        createdBy: 'admin',
         activityName: activity,
         memberCount: members,
         dateTime: date,
@@ -378,7 +391,9 @@ const Events = ({navigation}) => {
         activity={item.activityName}
         datetime={item.dateTime}
         eventDescr={item.activityDescription}
-        loc={item.activityCity}
+        city={item.activityCity}
+        address={item.activityStreet}
+        zip={item.activityZip}
         participantCount={item.memberCount}
       />
     );
